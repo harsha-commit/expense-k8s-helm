@@ -24,7 +24,7 @@ spec:
           mountPath: "/var/lib/{{ .Values.resource.name }}"
   volumeClaimTemplates:
   - metadata:
-      name: "{{ .Values.resource.name }}"
+      name: "{{ .Values.resource.name }}" # Must match volumeMounts.name
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "ebs-sc"
