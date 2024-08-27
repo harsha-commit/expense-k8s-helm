@@ -17,10 +17,10 @@ spec:
         component: "{{ .Values.resource.component }}"
     spec:
       containers:
-      - name: nginx
+      - name: "{{ .Values.resource.name }}"
         image: "joindevops/{{ .Values.resource.name }}:v1.0"
         volumeMounts:
-        - name: "{{ .Values.resource.component }}"
+        - name: "{{ .Values.resource.name }}"
           mountPath: "/var/lib/{{ .Values.resource.name }}"
   volumeClaimTemplates:
   - metadata:
