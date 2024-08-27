@@ -3,7 +3,7 @@ kind: StorageClass
 metadata:
   name: ebs-sc
   labels:
-    project: expense
+    project: "{{ Values.project.name }}"
     component: storageclass
 reclaimPolicy: Retain
 provisioner: ebs.csi.aws.com
