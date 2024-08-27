@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: db
 type: application
 description: A Helm chart for Expense DB
