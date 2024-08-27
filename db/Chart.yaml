@@ -1,6 +1,6 @@
 apiVersion: v2
 name: db
-type: application
 description: A Helm chart for Expense DB
-type: database
-version: 0.0.1
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
