@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.resource.component }}-service"
+  namespace: "{{ .Values.project.namespace }}"
+spec:
+  type: LoadBalancer
+  selector:
+    project: "{{ .Values.project.name }}"
+    component: "{{ .Values.resource.component }}"
+  ports:
+    - protocol: TCP
+      port: "{{ .Values.service.port }}"
+      targetPort: "{{ .Values.service.targetPort }}"

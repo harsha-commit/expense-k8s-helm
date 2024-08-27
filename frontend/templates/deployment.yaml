@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.resource.component }}-deployment"
+  namespace: "{{ .Values.project.namespace }}"
+  labels:
+    project: "{{ .Values.project.name }}"
+    component: deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      project:  "{{ .Values.project.name }}"
+      component: "{{ .Values.resource.component }}"
+  template:
+    metadata:
+      labels:
+        project:  "{{ .Values.project.name }}"
+        component: "{{ .Values.resource.component }}"
+    spec:
+      containers:
+        - name: nginx
+          image: "joindevops/{{ .Values.resource.component }}:v1.0"
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: "{{ .Values.resource.component }}-configmap"
+            items:
+              - key: nginx.conf
+                path: nginx.conf

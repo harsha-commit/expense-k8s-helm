@@ -1,0 +1,12 @@
+project:
+  name: expense
+  namespace: expense
+
+service:
+  port: 80
+  targetPort: 8080
+
+resource:
+  name: frontend
+  component: frontend
+  replicas: 2

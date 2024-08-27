@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: frontend-configmap
-  namespace: expense
+  name: "{{ .Values.resource.component }}-configmap"
+  namespace: "{{ .Values.project.namespace }}"
 data:
   nginx.conf: |
     user www-data;
@@ -91,56 +91,3 @@ data:
         }
 
     }
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: frontend-deployment
-  namespace: expense
-  labels:
-    project: expense
-    component: deployment
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      project: expense
-      component: frontend
-  template:
-    metadata:
-      labels:
-        project: expense
-        component: frontend
-    spec:
-      containers:
-        - name: nginx
-          image: joindevops/frontend:v1.0
-          volumeMounts:
-            - name: nginx-conf
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
-      volumes:
-        - name: nginx-conf
-          configMap:
-            name: frontend-configmap
-            items:
-              - key: nginx.conf
-                path: nginx.conf
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-service
-  namespace: expense
-spec:
-  type: LoadBalancer
-  selector:
-    project: expense
-    component: frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
